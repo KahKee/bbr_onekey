@@ -30,11 +30,6 @@ _info() {
     printf "\n"
 }
 
-_info2() {
-    _green "[Info] "
-    printf "\n"
-}
-
 _warn() {
     _yellow "[Warning] "
     printf -- "%s" "$1"
@@ -292,21 +287,19 @@ install_kernel() {
                     [ ! -f "/boot/grub/grub.conf" ] && _error "/boot/grub/grub.conf not found, please check it."
                     sed -i 's/^default=.*/default=0/g' /boot/grub/grub.conf
                 elif [ "$(_os_ver)" -eq 7 ]; then
-					# _info2提示方式
-					_info2 "导入ELRepo public key"
+					_info "导入ELRepo public key"
                     _error_detect "rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org"
-					_info2 "RHEL-7 SL-7或CentOS-7安装ELRepo:"
+					_info "RHEL-7 SL-7或CentOS-7安装ELRepo:"
 					yum install https://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
 					_info "安装稳定主线内核kernel-ml（ml=mainline）"
 					yum --enablerepo=elrepo-kernel -y install kernel-ml
-					_info2 "服务器已经安装的内核："
-					awk -F\' '$1=="menuentry " {print i++ " : " $2}' /etc/grub2.cfg 
-					_info2 "选择引导的内核:(#注："0"对应上面list的编号0)"
-					read kernel_number
+					_info "服务器已经安装的内核："
+					awk -F\' '$1=="menuentry " {print i++ " : " $2}' /etc/grub2.cfg
+					echo					
+					read -p "选择引导的内核(#注："0"对应上面list的编号0):" kernel_number
 					grub2-set-default ${kernel_number}
-					_info2 "选中启动内核序号为："
+					_info "选中启动内核序号为："
 					grub2-editenv list
-					sleep 2s
                 fi
             fi
             ;;
