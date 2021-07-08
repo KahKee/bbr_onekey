@@ -290,7 +290,7 @@ install_kernel() {
 					_info "导入ELRepo public key"
                     _error_detect "rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org"
 					_info "RHEL-7 SL-7或CentOS-7安装ELRepo:"
-					yum install https://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+					yum install -y https://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
 					_info "安装稳定主线内核kernel-ml（ml=mainline）"
 					yum --enablerepo=elrepo-kernel -y install kernel-ml
 					_info "服务器已经安装的内核："
