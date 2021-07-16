@@ -2,7 +2,7 @@
 修改秋水的bbr
 
 ## 一键命令（换行空两格）
-wget --no-check-certificate -O /opt/bbr.sh https://cdn.jsdelivr.net/gh/KahKee/bbr_onekey@raw/main/bbr.sh 
+wget --no-check-certificate -O /opt/bbr.sh https://cdn.jsdelivr.net/gh/KahKee/bbr_onekey@raw/main/bbr.sh  
 chmod 755 /opt/bbr.sh  
 /opt/bbr.sh  
 
