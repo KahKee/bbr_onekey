@@ -300,6 +300,8 @@ install_kernel() {
 					grub2-set-default ${kernel_number}
 					_info "选中启动内核序号为："
 					grub2-editenv list
+					_info "正在删除 rpm 文件"
+					rm -fv kernel-ml-*
                 fi
             fi
             ;;
