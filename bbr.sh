@@ -287,21 +287,31 @@ install_kernel() {
                     [ ! -f "/boot/grub/grub.conf" ] && _error "/boot/grub/grub.conf not found, please check it."
                     sed -i 's/^default=.*/default=0/g' /boot/grub/grub.conf
                 elif [ "$(_os_ver)" -eq 7 ]; then
-					_info "导入ELRepo public key"
-                    _error_detect "rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org"
-					_info "RHEL-7 SL-7或CentOS-7安装ELRepo:"
-					yum install -y https://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
-					_info "安装稳定主线内核kernel-ml（ml=mainline）"
-					yum --enablerepo=elrepo-kernel -y install kernel-ml
-					_info "服务器已经安装的内核："
-					awk -F\' '$1=="menuentry " {print i++ " : " $2}' /etc/grub2.cfg
-					echo					
-					read -p "选择引导的内核(#注："0"对应上面list的编号0):" kernel_number
-					grub2-set-default ${kernel_number}
-					_info "选中启动内核序号为："
-					grub2-editenv list
-					_info "正在删除 rpm 文件"
-					rm -fv kernel-ml-*
+		    _info "1.安装最新版内核的 rpm 安装包"
+		    _info "2.安装Linux Kernel 5.12.x 编译版内核的 rpm 安装包"
+		    read -p "安装最新内核(1) 或 安装指定内核(2): " _num
+		    if [ "$(_num)" -eq 1 ]; then
+			_info "导入ELRepo public key"
+                    	_error_detect "rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org"
+		    	_info "RHEL-7 SL-7或CentOS-7安装ELRepo:"
+		    	yum install -y https://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+		    	_info "安装稳定主线内核kernel-ml（ml=mainline）"
+		    	yum --enablerepo=elrepo-kernel -y install kernel-ml
+		    elif [ "$(_num)" -eq 2 ]; then
+			wget https://dl.lamp.sh/kernel/el7/kernel-ml-5.12.19-1.el7.x86_64.rpm >/dev/null 2>&1
+			wget https://dl.lamp.sh/kernel/el7/kernel-ml-devel-5.12.19-1.el7.x86_64.rpm >/dev/null 2>&1
+			wget https://dl.lamp.sh/kernel/el7/kernel-ml-headers-5.12.19-1.el7.x86_64.rpm >/dev/null 2>&1
+			yum localinstall kernel-ml-* -y 
+		    fi
+		    _info "服务器已经安装的内核："
+		    awk -F\' '$1=="menuentry " {print i++ " : " $2}' /etc/grub2.cfg
+		    echo					
+		    read -p "选择引导的内核(#注："0"对应上面list的编号0):" kernel_number
+		    grub2-set-default ${kernel_number}
+		    _info "选中启动内核序号为："
+		    grub2-editenv list
+		    _info "正在删除 rpm 文件"
+		    rm -fv kernel-ml-*
                 fi
             fi
             ;;
