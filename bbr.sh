@@ -289,15 +289,15 @@ install_kernel() {
                 elif [ "$(_os_ver)" -eq 7 ]; then
 		    _info "1.安装最新版内核的 rpm 安装包"
 		    _info "2.安装Linux Kernel 5.12.x 编译版内核的 rpm 安装包"
-		    read -p "安装最新内核(1) 或 安装指定内核(2): " _num
-		    if [ "$(_num)" -eq 1 ]; then
+		    read -p "安装最新内核(1) 或 安装指定内核(2): " num
+		    if [ "$(num)" -eq 1 ]; then
 			_info "导入ELRepo public key"
                     	_error_detect "rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org"
 		    	_info "RHEL-7 SL-7或CentOS-7安装ELRepo:"
 		    	yum install -y https://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
 		    	_info "安装稳定主线内核kernel-ml（ml=mainline）"
 		    	yum --enablerepo=elrepo-kernel -y install kernel-ml
-		    elif [ "$(_num)" -eq 2 ]; then
+		    elif [ "$(num)" -eq 2 ]; then
 			wget https://dl.lamp.sh/kernel/el7/kernel-ml-5.12.19-1.el7.x86_64.rpm >/dev/null 2>&1
 			wget https://dl.lamp.sh/kernel/el7/kernel-ml-devel-5.12.19-1.el7.x86_64.rpm >/dev/null 2>&1
 			wget https://dl.lamp.sh/kernel/el7/kernel-ml-headers-5.12.19-1.el7.x86_64.rpm >/dev/null 2>&1
