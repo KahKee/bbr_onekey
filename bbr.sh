@@ -298,9 +298,9 @@ install_kernel() {
 		    	_info "安装稳定主线内核kernel-ml（ml=mainline）"
 		    	yum --enablerepo=elrepo-kernel -y install kernel-ml
 		    elif [ "$serial_number" -eq 2 ]; then
-			wget https://dl.lamp.sh/kernel/el7/kernel-ml-5.12.19-1.el7.x86_64.rpm >/dev/null 2>&1
-			wget https://dl.lamp.sh/kernel/el7/kernel-ml-devel-5.12.19-1.el7.x86_64.rpm >/dev/null 2>&1
-			wget https://dl.lamp.sh/kernel/el7/kernel-ml-headers-5.12.19-1.el7.x86_64.rpm >/dev/null 2>&1
+			wget https://fr1.teddyvps.com/kernel/el7/kernel-ml-5.12.19-1.el7.x86_64.rpm >/dev/null 2>&1
+			wget https://fr1.teddyvps.com/kernel/el7/kernel-ml-devel-5.12.19-1.el7.x86_64.rpm >/dev/null 2>&1
+			wget https://fr1.teddyvps.com/kernel/el7/kernel-ml-headers-5.12.19-1.el7.x86_64.rpm >/dev/null 2>&1
 			yum localinstall kernel-ml-* -y 
 		    fi
 		    _info "服务器已经安装的内核："
